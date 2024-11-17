@@ -1,0 +1,10 @@
+^C:\USERS\I750397\UNISINOS\POO\TRABALHOGB\BUILD\CMAKEFILES\91B1F99FF82CE7AA064E4E076DABE48B\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/I750397/Unisinos/POO/TrabalhoGb -BC:/Users/I750397/Unisinos/POO/TrabalhoGb/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/I750397/Unisinos/POO/TrabalhoGb/build/TrabalhoGb.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

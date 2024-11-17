@@ -1,0 +1,3 @@
+C:/Users/I750397/Unisinos/POO/TrabalhoGb/build/CMakeFiles/TrabalhoGb.dir
+C:/Users/I750397/Unisinos/POO/TrabalhoGb/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/I750397/Unisinos/POO/TrabalhoGb/build/CMakeFiles/ZERO_CHECK.dir
