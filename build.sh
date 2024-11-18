@@ -1,5 +1,3 @@
-cmake -S . -B build
-cd build
-cmake --build .
-cp compile_commands.json ../
-cd ..
+cmake -S . -B build -G Ninja
+cmake --build build/
+cp build/compile_commands.json ./
