@@ -1,3 +1,3 @@
-cd build/Debug
+cd build
 ./TrabalhoGb.exe
-cd ../..
+cd ..
