@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(TrabalhoGb VERSION 1.0)
 
+set(CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address,undefined -fno-omit-frame-pointer -g -Wall -Wshadow -std=c++17 -Wno-unused-result -Wno-sign-compare -Wno-char-subscripts ")
+set(CMAKE_CXX_FLAGS_RELEASE "-fsanitize=address,undefined -fno-omit-frame-pointer -g -Wall -Wshadow -std=c++17 -Wno-unused-result -Wno-sign-compare -Wno-char-subscripts ")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -16,7 +18,11 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(TrabalhoGb
-    src/main.cpp)
+    src/main.cpp
+    src/Browser.cpp
+    src/Button.cpp
+    src/Tab.cpp
+    src/TabHeader.cpp)
 
 add_custom_command(
         TARGET TrabalhoGb POST_BUILD
