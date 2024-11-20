@@ -1,0 +1,158 @@
+#pragma once
+#include "RenderElement.hpp"
+#include "Tab.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <list>
+#include <unordered_set>
+#include <exception>
+
+class Browser {
+private:
+	static sf::Font defaultFont;
+    sf::RenderWindow window;
+    std::list<TabHeader> tabHeaders;
+    std::list<Tab> tabs;
+    sf::Text tabText;
+
+    sf::RectangleShape newTabButton;
+    sf::Text newTabButtonText;
+
+    float tabWidth;
+
+    std::unordered_set<std::shared_ptr<RenderElement>> elements;
+
+public:
+	inline static sf::Font getDefaultFont(){
+		static bool firstExecution = true;
+		if(firstExecution and !defaultFont.loadFromFile("resources/tuffy.ttf")){
+			throw std::runtime_error("Error while loading font");
+		}
+		firstExecution = false;
+		return defaultFont;
+	}
+    Browser()
+        : window(sf::VideoMode(800, 600), "Simulador de Navegador - SFML") {
+
+        addTab("Aba Inicial");
+
+        // Inicializar o botão "Nova Aba" na parte superior da janela
+        newTabButton.setSize(sf::Vector2f(100, 30));
+        newTabButton.setPosition(10, 10); // Posição no topo da janela
+        newTabButton.setFillColor(sf::Color(100, 200, 100));
+
+        newTabButtonText.setFont(getDefaultFont());
+        newTabButtonText.setString("Nova Aba");
+        newTabButtonText.setCharacterSize(20);
+        newTabButtonText.setFillColor(sf::Color::Black);
+        newTabButtonText.setPosition(newTabButton.getPosition().x + 10,
+            newTabButton.getPosition().y + 5);
+
+        tabWidth = 200.0f; // Largura das abas
+    }
+
+    void run() {
+        while (window.isOpen()) {
+            processEvents();
+            render();
+        }
+    }
+
+private:
+    void addTab(const std::string& title) {
+        Tab newTab(title, getDefaultFont()); // Construímos o objeto `Tab`
+        tabs.push_back(newTab); // Adicionamos o objeto `Tab` na lista
+        if (tabs.size() == 1) {
+            tabs.back().setActiveFlag(true);
+        }
+        TabHeader header(tabs.size() - 1, tabs.back(), getDefaultFont());
+        tabHeaders.push_back(header);
+    }
+
+    void processEvents() {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+            // Verificar cliques do mouse
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+
+                    // Verificar se o clique está dentro dos limites da janela
+                    if (window.getViewport(window.getView())
+                            .contains(event.mouseButton.x, event.mouseButton.y)) {
+
+                        // Verificar se o botão "Nova Aba" foi clicado
+                        if (newTabButton.getGlobalBounds().contains(mousePos)) {
+                            addTab("Nova Aba " + std::to_string(tabs.size() + 1));
+                        }
+
+                        // Verificar se alguma aba foi clicada para selecioná-la
+                        for (auto tabHeader : this->tabHeaders) {
+                            if (!tabHeader.getShape()
+                                    .getGlobalBounds()
+                                    .contains(mousePos)) continue;
+                        }
+                        for (auto it = tabs.begin(); it != tabs.end(); ++it, ++index) {
+                            sf::FloatRect tabRect(index * tabWidth, 50, tabWidth, 30);
+
+                            if (tabRect.contains(mousePos)) {
+                                selectedTab = it;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Navegação pelas abas usando as setas do teclado
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Right) {
+                    if (selectedTab != std::prev(tabs.end())) {
+                        ++selectedTab;
+                    } else {
+                        selectedTab = tabs.begin(); // Voltar para a primeira aba
+                    }
+                }
+                if (event.key.code == sf::Keyboard::Left) {
+                    if (selectedTab != tabs.begin()) {
+                        --selectedTab;
+                    } else {
+                        selectedTab = std::prev(tabs.end()); // Ir para a última aba
+                    }
+                }
+            }
+        }
+    }
+
+    void processClick(float x, float y){
+        for(auto element: this->elements){
+            element->onClick(x, y);
+        }
+    }
+
+    void render() {
+        window.clear(sf::Color(50, 50, 50));
+        for(auto element: this->elements){
+            element->draw();
+        }
+        renderHeaderButtons();
+        renderHeaderTabList();
+        window.display();
+    }
+
+    void renderHeaderButtons() {
+        window.draw(newTabButton);
+        window.draw(newTabButtonText);
+    }
+    void renderHeaderTabList() {
+        int index = 0;
+        for (auto tab : this->tabs) {
+            TabHeader(index++, tab, getDefaultFont()).draw(window);
+        }
+    }
+
+};
