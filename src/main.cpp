@@ -1,5 +1,5 @@
-#include <SFML/Graphics.hpp>
 #include "Browser.hpp"
+#include <SFML/Graphics.hpp>
 
 int main() {
     Browser browser;

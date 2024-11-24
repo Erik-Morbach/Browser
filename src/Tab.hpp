@@ -1,7 +1,6 @@
 #pragma once
-#include "TabDfn.hpp"
-#include "Browser.hpp"
 #include "RenderElement.hpp"
+#include "TabDfn.hpp"
 #include "TabHeader.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -27,14 +26,14 @@ public:
     void onClick(float x, float y) override;
     void teardown() override;
 
-	void setOnSelectTabCallback(std::function<void(int)> callback) {
-		this->onSelectTabCallback = callback;
-	}
-	void setIndex(int index);
-	int getIndex() {return this->header.getIndex(); }
+    void setOnSelectTabCallback(std::function<void(int)> callback) {
+        this->onSelectTabCallback = callback;
+    }
+    void setIndex(int index);
+    int getIndex() { return this->header.getIndex(); }
     void setActiveFlag(bool value) {
-		this->activeFlag = value;
-		header.startup();
-	}
+        this->activeFlag = value;
+        header.startup();
+    }
     bool getActiveFlag() const { return this->activeFlag; }
 };

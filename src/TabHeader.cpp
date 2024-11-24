@@ -1,10 +1,9 @@
 #include "TabHeader.hpp"
 #include "Tab.hpp"
 
-TabHeader::TabHeader(Tab* tab, std::function<void(int)> onClickCallback)
+TabHeader::TabHeader(Tab* tab)
     : tab(tab)
-    , font(Browser::getDefaultFont())
-    , onClickCallback(onClickCallback) {
+    , font(Browser::getDefaultFont()) {
 }
 void TabHeader::draw(sf::RenderWindow& window) const {
     window.draw(tabShape);
@@ -23,6 +22,6 @@ void TabHeader::startup() {
 }
 void TabHeader::onClick(float x, float y) {
     if (!tabShape.getGlobalBounds().contains(x, y)) return;
-    onClickCallback(this->getId());
+    onClickCallback(this->id);
 }
 void TabHeader::teardown() { }

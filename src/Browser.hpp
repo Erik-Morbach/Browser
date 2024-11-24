@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Window.hpp>
-#include <unordered_set>
 #include <memory>
+#include <unordered_set>
 
 class Browser {
     sf::RenderWindow window;
@@ -24,7 +24,7 @@ public:
     void run();
 
 private:
-    void processEvents();
+    bool processEvents();
     void processClick(sf::Event event);
     void onClick(float x, float y);
     void render();

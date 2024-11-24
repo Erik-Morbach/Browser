@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Browser.hpp"
 #include "Button.hpp"
 #include "RenderElement.hpp"
 #include "Tab.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <iostream>
 #include <list>
 class MainWindow : public RenderElement {
 private:
@@ -24,18 +22,9 @@ public:
         newTabButton.setTextColor(sf::Color::Black);
         newTabButton.setText("Nova Aba");
         newTabButton.setOnClickCallback([this](int id) {
-				std::cout << "Chegou no newTabCallback()"<<std::endl;
-				this->addNewTab();
-			});
-		newTabButton.startup();
-
-        openHtmlButton.setPosition(150, 10);
-        openHtmlButton.setSize(100, 30);
-        openHtmlButton.setBackgroundColor(sf::Color(244, 162, 97));
-        openHtmlButton.setTextColor(sf::Color::Black);
-        openHtmlButton.setText("Nova Aba");
-        openHtmlButton.setOnClickCallback([this](int id) { });
-		openHtmlButton.startup();
+            this->addNewTab();
+        });
+        newTabButton.startup();
     }
     void teardown() override {
     }
@@ -50,34 +39,39 @@ public:
     void draw(sf::RenderWindow& window) const override {
         this->newTabButton.draw(window);
         this->openHtmlButton.draw(window);
-        for (auto tab : this->tabs)
+        for (auto& tab : this->tabs)
             tab.draw(window);
     }
 
     void addNewTab() {
-        if(tabs.size()>=4) return;
+        if (tabs.size() >= 4) return;
 
-        Tab newTab("teste");
+        tabs.emplace_back("teste");
+        Tab& newTab = tabs.back();
+        newTab.setOnSelectTabCallback([this](int id) {
+            this->onSelectTab(id);
+        });
         newTab.startup();
-        newTab.setOnSelectTabCallback([this](int id){this->onSelectTab(id);});
-
-        tabs.push_back(newTab);
         if (tabs.size() == 1)
             onSelectTab(newTab.getId());
-
         reorderTabs();
+        reloadTabs();
     }
 
     void onSelectTab(int id) {
-        std::cout << "Selecionando tab "<<id<<std::endl;
-        for (auto &tab : this->tabs) {
+        for (auto& tab : this->tabs) {
             tab.setActiveFlag(tab.getId() == id);
         }
     }
-    void reorderTabs(){
+    void reorderTabs() {
         int index = 0;
-        for(auto &tab: this->tabs){
+        for (auto& tab : this->tabs) {
             tab.setIndex(index++);
+        }
+    }
+    void reloadTabs() {
+        for (auto& tab : this->tabs) {
+            tab.startup();
         }
     }
     void onRemoveTab(int id) {

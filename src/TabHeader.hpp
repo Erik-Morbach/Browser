@@ -18,14 +18,17 @@ private:
     std::function<void(int)> onClickCallback;
 
 public:
-    TabHeader(Tab* tab, std::function<void(int)> onClickCallback);
+    TabHeader(Tab* tab);
 
     void draw(sf::RenderWindow& window) const override;
     void startup() override;
     void onClick(float x, float y) override;
     void teardown() override;
 
-    int setIndex(int index) { this->index = index; }
+    void setOnClickCallback(std::function<void(int)> callback) {
+        this->onClickCallback = callback;
+    }
+    void setIndex(int index) { this->index = index; }
     int getIndex() const { return this->index; }
     sf::RectangleShape getShape() const { return this->tabShape; }
 };

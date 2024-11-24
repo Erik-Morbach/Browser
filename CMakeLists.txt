@@ -18,11 +18,12 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(TrabalhoGb
-    src/main.cpp
-    src/Browser.cpp
+    src/IdUtils.cpp
     src/Button.cpp
+    src/TabHeader.cpp
     src/Tab.cpp
-    src/TabHeader.cpp)
+    src/Browser.cpp
+    src/main.cpp)
 
 add_custom_command(
         TARGET TrabalhoGb POST_BUILD
