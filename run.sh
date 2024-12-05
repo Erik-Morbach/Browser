@@ -1,3 +1,1 @@
-cd build
-./TrabalhoGb
-cd ../
+./build/TrabalhoGb
