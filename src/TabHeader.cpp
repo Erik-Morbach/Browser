@@ -15,7 +15,7 @@ void TabHeader::startup() {
     tabShape.setFillColor(tab->getActiveFlag() ? sf::Color(100, 100, 250)
                                                : sf::Color(200, 200, 200));
     tabText.setFont(font);
-    tabText.setString("Aba " + std::to_string(this->getId() + 1));
+    tabText.setString("Aba " + std::to_string(this->index + 1));
     tabText.setCharacterSize(20);
     tabText.setFillColor(sf::Color::Black);
     tabText.setPosition(index * tabWidth + 10, 52);
