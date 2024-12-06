@@ -56,16 +56,11 @@ public:
     void onClick(float x, float y) override {
         newTabButton.onClick(x, y);
         openHtmlButton.onClick(x, y);
-$# adding_tab_removal
-        bool isTabClicked;
-        std::list<Tab*> tabsCopy;
-        for (auto& tab : this->tabs) {
-            tabsCopy.push_back(&tab);
-        }
-        for (auto& tab : tabsCopy) {
-$#
+        std::list<std::shared_ptr<Tab>> tabsCopy;
         for (auto tab : this->tabs) {
-$#main
+            tabsCopy.push_back(tab);
+        }
+        for (auto tab : tabsCopy) {
             tab->onClick(x, y);
         }
     }
@@ -78,30 +73,14 @@ $#main
 
 	void addHtmlTab(){
         if (tabs.size() >= 4) return;
-$# adding_tab_removal
-
-        tabs.emplace_back("teste");
-        Tab& newTab = tabs.back();
-        newTab.setOnSelectTabCallback([this](int id) {
-            this->onSelectTab(id);
-        });
-        newTab.setOnRemoveTabCallBack([this](int id) {
-            this->onRemoveTab(id);
-        });
-        newTab.startup();
-        if (tabs.size() == 1)
-            onSelectTab(newTab.getId());
-        reorderTabs();
-        reloadTabs();
-$#
         tabs.push_back(std::make_shared<HtmlTab>("Html Tab"));
 		this->setupLastAddedTab();
 	}
+
     void addBasicTab() {
         if (tabs.size() >= 4) return;
         tabs.push_back(std::make_shared<BasicTab>("Basic Tab"));
 		this->setupLastAddedTab();
-$# main
     }
 
     void onSelectTab(int id) {
@@ -123,14 +102,8 @@ $# main
     void onRemoveTab(int id) {
         auto it = tabs.begin();
         while (it != tabs.end()) {
-$#adding_tab_removal
-            if ((it->getId()) == id) {
-                std::cout << it->getIndex() << std::endl;
-                it->teardown();
-$#
             if (it->get()->getId()== id) {
                 it->get()->teardown();
-$# main
                 tabs.erase(it);
                 break;
             } else {

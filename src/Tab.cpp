@@ -24,16 +24,7 @@ void Tab::startup() {
     content.setSize(sf::Vector2f(600, 400));
     content.setFillColor(sf::Color::White);
     content.setPosition(100, 150);
-$# adding_tab_removal
-    std::string contentText = this->title + " is the title of tab " + std::to_string(this->getIndex()+ 1);
 
-    text.setFont(font);
-    text.setString(contentText);
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::Black);
-    text.setPosition(content.getPosition().x + 10, content.getPosition().y + 10);
-$#
-$# main
     header.setOnClickCallback([this](int id) {
         this->onClickCallback(id);
     });
