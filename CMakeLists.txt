@@ -18,11 +18,14 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(TrabalhoGb
+    src/StringUtils.cpp
     src/IdUtils.cpp
     src/Button.cpp
     src/TabHeader.cpp
     src/Tab.cpp
     src/Browser.cpp
+    src/Tokenizer.cpp
+    src/HtmlParser.cpp
     src/main.cpp)
 
 add_custom_command(
