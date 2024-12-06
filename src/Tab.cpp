@@ -62,7 +62,7 @@ void BasicTab::draw(sf::RenderWindow& window) const {
 
 void HtmlTab::startup(){
 	Tab::startup();
-	std::fstream file("input.html", std::ios::in);
+	std::fstream file("resources/input.html", std::ios::in);
 	std::string text;
 	while(!file.eof()) text += file.get();
 	HtmlParser parser;
