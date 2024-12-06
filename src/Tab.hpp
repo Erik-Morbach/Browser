@@ -12,6 +12,8 @@ private:
     TabHeader header;
     bool activeFlag;
     std::function<void(int)> onSelectTabCallback;
+    std::function<void(int)> onRemoveTabCallback;
+    void onRemoveCallback(int id);
     void onClickCallback(int id);
 protected:
     sf::RectangleShape content;
@@ -28,6 +30,9 @@ public:
 
     void setOnSelectTabCallback(std::function<void(int)> callback) {
         this->onSelectTabCallback = callback;
+    }
+    void setOnRemoveTabCallBack(std::function<void(int)> callback) {
+        this->onRemoveTabCallback = callback;
     }
     void setIndex(int index);
     int getIndex() { return this->header.getIndex(); }

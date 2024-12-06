@@ -13,6 +13,7 @@ private:
     Tab* tab;
     sf::Font font;
     sf::Text tabText;
+    sf::Text closeText;
     sf::RectangleShape tabShape;
     std::function<void(int)> onRemoveCallback;
     std::function<void(int)> onClickCallback;
@@ -27,6 +28,9 @@ public:
 
     void setOnClickCallback(std::function<void(int)> callback) {
         this->onClickCallback = callback;
+    }
+    void setOnRemoveCallback(std::function<void(int)> callback) {
+        this->onRemoveCallback = callback;
     }
     void setIndex(int index) { this->index = index; }
     int getIndex() const { return this->index; }
