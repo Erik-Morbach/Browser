@@ -46,7 +46,7 @@ void Tab::setIndex(int index) {
 
 void BasicTab::startup(){
 	Tab::startup();
-    std::string contentText = this->title + " is the title of tab " + std::to_string(this->id);
+    std::string contentText = this->title + " is the title of tab " + std::to_string(this->getIndex()+1);
     // Configuração do título da aba
     text.setFont(font);
     text.setString(contentText);

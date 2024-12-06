@@ -1,5 +1,6 @@
 #include "TabHeader.hpp"
 #include "Tab.hpp"
+#include <iostream>
 
 TabHeader::TabHeader(Tab* tab)
     : tab(tab)
@@ -31,6 +32,7 @@ void TabHeader::startup() {
 void TabHeader::onClick(float x, float y) {
     if (!tabShape.getGlobalBounds().contains(x, y)) return;
 
+	std::cout << "Click on Header " << this->getIndex() << std::endl;
     if (closeText.getGlobalBounds().contains(x, y)) {
         onRemoveCallback(this->id);
         return;

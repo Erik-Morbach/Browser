@@ -7,26 +7,30 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <fstream>
-#include <list>
 #include <iostream>
+#include <list>
 class MainWindow : public RenderElement {
 private:
     std::list<std::shared_ptr<Tab>> tabs;
     Button newTabButton;
     Button openHtmlButton;
-	std::list<std::shared_ptr<RenderElement>> elements;
+    std::list<std::shared_ptr<RenderElement>> elements;
 
-	void setupLastAddedTab(){
-		std::shared_ptr<Tab> newTab = tabs.back();
+    void setupLastAddedTab() {
+        std::shared_ptr<Tab> newTab = tabs.back();
         newTab->setOnSelectTabCallback([this](int id) {
             this->onSelectTab(id);
+        });
+        newTab->setOnRemoveTabCallBack([this](int id){
+            this->onRemoveTab(id);
         });
         newTab->startup();
         if (tabs.size() == 1)
             onSelectTab(newTab->getId());
         reorderTabs();
         reloadTabs();
-	}
+    }
+
 public:
     MainWindow() {
     }
@@ -46,7 +50,7 @@ public:
         openHtmlButton.setTextColor(sf::Color::Black);
         openHtmlButton.setText("Open Html");
         openHtmlButton.setOnClickCallback([this](int id) {
-			this->addHtmlTab();
+            this->addHtmlTab();
         });
         openHtmlButton.startup();
     }
@@ -71,16 +75,16 @@ public:
             tab->draw(window);
     }
 
-	void addHtmlTab(){
+    void addHtmlTab() {
         if (tabs.size() >= 4) return;
         tabs.push_back(std::make_shared<HtmlTab>("Html Tab"));
-		this->setupLastAddedTab();
-	}
+        this->setupLastAddedTab();
+    }
 
     void addBasicTab() {
         if (tabs.size() >= 4) return;
         tabs.push_back(std::make_shared<BasicTab>("Basic Tab"));
-		this->setupLastAddedTab();
+        this->setupLastAddedTab();
     }
 
     void onSelectTab(int id) {
@@ -102,7 +106,7 @@ public:
     void onRemoveTab(int id) {
         auto it = tabs.begin();
         while (it != tabs.end()) {
-            if (it->get()->getId()== id) {
+            if (it->get()->getId() == id) {
                 it->get()->teardown();
                 tabs.erase(it);
                 break;
