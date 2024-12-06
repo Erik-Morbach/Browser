@@ -15,6 +15,7 @@ private:
     std::string title;
     bool activeFlag;
     std::function<void(int)> onSelectTabCallback;
+    std::function<void(int)> onRemoveTabCallback;
     void onClickCallback(int id);
 
 public:
@@ -28,6 +29,9 @@ public:
 
     void setOnSelectTabCallback(std::function<void(int)> callback) {
         this->onSelectTabCallback = callback;
+    }
+    void setOnRemoveTabCallBack(std::function<void(int)> callback) {
+        this->onRemoveTabCallback = callback;
     }
     void setIndex(int index);
     int getIndex() { return this->header.getIndex(); }

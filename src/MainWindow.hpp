@@ -51,6 +51,9 @@ public:
         newTab.setOnSelectTabCallback([this](int id) {
             this->onSelectTab(id);
         });
+        newTab.setOnRemoveTabCallBack([this](int id) {
+            this->onRemoveTab(id);
+        });
         newTab.startup();
         if (tabs.size() == 1)
             onSelectTab(newTab.getId());
@@ -77,10 +80,12 @@ public:
     void onRemoveTab(int id) {
         auto it = tabs.begin();
         while (it != tabs.end()) {
-            if (it->getId() == id) {
+            if ((it->getId() + 1) == id) {
                 it->teardown();
-                tabs.erase(it);
+                it = tabs.erase(it);
                 break;
+            } else {
+                ++it;
             }
         }
     }

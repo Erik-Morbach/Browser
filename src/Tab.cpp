@@ -31,6 +31,9 @@ void Tab::startup() {
     header.setOnClickCallback([this](int id) {
         this->onClickCallback(id);
     });
+    header.setOnRemoveCallback([this](int id) {
+        this->onRemoveTabCallback(id);
+    });
     header.startup();
 }
 
