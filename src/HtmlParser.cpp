@@ -28,14 +28,18 @@ std::vector<std::shared_ptr<RenderElement>> HtmlParser::parse(Position basePos, 
 
         Token& t = tokens[i];
         if (t.type == TokenType::tag) {
-            if (htmlStack.top()->isClosingTag(t.value)) {
+			std::string tagName = t.value.substr(0, t.value.find_first_of(' '));
+            if (htmlStack.size()>0 and htmlStack.top()->isClosingTag(tagName)) {
                 htmlStack.pop();
                 continue;
             }
-            auto tag = this->nameToTag[t.value]();
+			if(this->nameToTag.count(tagName) == 0){
+				std::cout << "Tag name "<< tagName << " has no implementation" << std::endl;
+				continue;
+			}
+            auto tag = this->nameToTag[tagName]();
             tag->setStyle(style);
             tag->setPosition(pos);
-            std::cout << tag->getTagName() << std::endl;
             htmlStack.push(tag);
             continue;
         } else {

@@ -25,6 +25,7 @@ add_executable(TrabalhoGb
     src/Tab.cpp
     src/Browser.cpp
     src/Tokenizer.cpp
+    src/HtmlTag.cpp
     src/HtmlParser.cpp
     src/main.cpp)
 

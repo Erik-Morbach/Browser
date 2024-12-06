@@ -23,6 +23,6 @@ private:
 	};
 
 public:
-	HtmlParser();
+	HtmlParser(){}
 	std::vector<std::shared_ptr<RenderElement>> parse(Position basePos, const std::string &input);
 };

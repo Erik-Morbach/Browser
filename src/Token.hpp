@@ -12,4 +12,7 @@ enum TokenType{
 struct Token{
 	std::string value;
 	TokenType::TokenType type;
+	std::string str() {
+		return value + "("+std::to_string(type)+")";
+	}
 };

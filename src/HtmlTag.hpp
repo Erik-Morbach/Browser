@@ -23,36 +23,43 @@ public:
 };
 class DocType : public HtmlTag {
 public:
+	DocType(){ this->tagName = "!DOCTYPE"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
 };
 class Html : public HtmlTag {
 public:
+	Html(){ this->tagName = "html"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
 };
 class Title : public HtmlTag {
 public:
+	Title(){ this->tagName = "title"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
 };
 class Body : public HtmlTag {
 public:
+	Body(){ this->tagName = "body"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
     void setStyle(const StyleContext& ctx);
     StyleContext getStyle();
 };
 class H1 : public HtmlTag {
 public:
+	H1(){ this->tagName = "h1"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
     void setStyle(const StyleContext& ctx);
     StyleContext getStyle();
 };
 class H2 : public HtmlTag {
 public:
+	H2(){ this->tagName = "h2"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
     void setStyle(const StyleContext& ctx);
     StyleContext getStyle();
 };
 class P : public HtmlTag {
 public:
+	P(){ this->tagName = "p"; }
     std::shared_ptr<RenderElement> renderContent(const std::string& content);
     void setStyle(const StyleContext& ctx);
     StyleContext getStyle();
