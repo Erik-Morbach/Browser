@@ -10,6 +10,9 @@ Tab::Tab(const std::string& title)
 void Tab::onClickCallback(int id) {
     onSelectTabCallback(this->id);
 }
+void Tab::onRemoveCallback(int id) {
+    onRemoveTabCallback(this->id);
+}
 void Tab::draw(sf::RenderWindow& window) const {
     header.draw(window);
     if (!this->activeFlag) return;
@@ -17,12 +20,11 @@ void Tab::draw(sf::RenderWindow& window) const {
     window.draw(text);
 }
 void Tab::startup() {
-    // Um retângulo simples para representar o conteúdo de uma aba
     content.setSize(sf::Vector2f(600, 400));
     content.setFillColor(sf::Color::White);
     content.setPosition(100, 150);
     std::string contentText = this->title + " is the title of tab " + std::to_string(this->getIndex()+ 1);
-    // Configuração do título da aba
+
     text.setFont(font);
     text.setString(contentText);
     text.setCharacterSize(24);
@@ -32,7 +34,7 @@ void Tab::startup() {
         this->onClickCallback(id);
     });
     header.setOnRemoveCallback([this](int id) {
-        this->onRemoveTabCallback(id);
+        this->onRemoveTabCallback(this->id);
     });
     header.startup();
 }

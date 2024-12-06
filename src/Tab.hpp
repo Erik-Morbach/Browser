@@ -16,6 +16,7 @@ private:
     bool activeFlag;
     std::function<void(int)> onSelectTabCallback;
     std::function<void(int)> onRemoveTabCallback;
+    void onRemoveCallback(int id);
     void onClickCallback(int id);
 
 public:

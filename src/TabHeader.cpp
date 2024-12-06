@@ -22,7 +22,6 @@ void TabHeader::startup() {
     tabText.setFillColor(sf::Color::Black);
     tabText.setPosition(index * tabWidth + 10, 52);
 
-    // Configura o "X" no final da aba
     closeText.setFont(font);
     closeText.setString("X");
     closeText.setCharacterSize(20);

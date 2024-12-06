@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <list>
+#include <iostream>
 class MainWindow : public RenderElement {
 private:
     std::list<Tab> tabs;
@@ -32,8 +33,13 @@ public:
     void onClick(float x, float y) override {
         newTabButton.onClick(x, y);
         openHtmlButton.onClick(x, y);
-        for (auto tab : this->tabs) {
-            tab.onClick(x, y);
+        bool isTabClicked;
+        std::list<Tab*> tabsCopy;
+        for (auto& tab : this->tabs) {
+            tabsCopy.push_back(&tab);
+        }
+        for (auto& tab : tabsCopy) {
+            tab->onClick(x, y);
         }
     }
     void draw(sf::RenderWindow& window) const override {
@@ -80,9 +86,10 @@ public:
     void onRemoveTab(int id) {
         auto it = tabs.begin();
         while (it != tabs.end()) {
-            if ((it->getId() + 1) == id) {
+            if ((it->getId()) == id) {
+                std::cout << it->getIndex() << std::endl;
                 it->teardown();
-                it = tabs.erase(it);
+                tabs.erase(it);
                 break;
             } else {
                 ++it;
