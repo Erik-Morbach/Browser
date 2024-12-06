@@ -4,27 +4,27 @@
 #include "TabHeader.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <functional>
 
 class Tab : public RenderElement {
 private:
     TabHeader header;
-    sf::RectangleShape content;
-    sf::Text text;
-    sf::Font& font;
-    std::string title;
     bool activeFlag;
     std::function<void(int)> onSelectTabCallback;
     std::function<void(int)> onRemoveTabCallback;
     void onRemoveCallback(int id);
     void onClickCallback(int id);
-
+protected:
+    sf::RectangleShape content;
+    sf::Font& font;
+    std::string title;
 public:
     Tab(const std::string& title);
 
-    void draw(sf::RenderWindow& window) const override;
+    virtual void draw(sf::RenderWindow& window) const override;
 
-    void startup() override;
+    virtual void startup() override;
     void onClick(float x, float y) override;
     void teardown() override;
 
@@ -41,4 +41,20 @@ public:
         header.startup();
     }
     bool getActiveFlag() const { return this->activeFlag; }
+};
+class BasicTab : public Tab{
+	sf::Text text;
+public:
+	BasicTab(const std::string &title): Tab(title){}
+    void startup() override;
+	void draw(sf::RenderWindow& window) const override;
+};
+
+class HtmlTab : public Tab{
+private:
+	std::vector<std::shared_ptr<RenderElement>> elements;
+public:
+	HtmlTab(const std::string& title) :Tab(title){}
+    void startup() override;
+	void draw(sf::RenderWindow& window) const override;
 };
