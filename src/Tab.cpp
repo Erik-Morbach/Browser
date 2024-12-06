@@ -61,6 +61,7 @@ void BasicTab::draw(sf::RenderWindow& window) const {
 }
 
 void HtmlTab::startup(){
+	this->elements.clear();
 	Tab::startup();
 	std::fstream file("resources/input.html", std::ios::in);
 	std::string text;
